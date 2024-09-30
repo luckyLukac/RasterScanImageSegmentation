@@ -9,6 +9,13 @@
 /// Namespace for image segmentation using different methods.
 /// </summary>
 namespace ImageSegmentation {
+    enum class Distance {
+        onePixel,
+        twoPixel,
+        segmentAverage
+    };
+
+
     /// <summary>
     /// Extraction of separate segments from an image representing a segmentation mask using the flood fill algorithm.
     /// </summary>
@@ -31,7 +38,7 @@ namespace ImageSegmentation {
     /// <param name="epsilon">Size of the point neighborhood </param>
     /// <param name="minimumNumberOfNeighbourhoodPoints">Minimum number of points required to form a dense region</param>
     /// <returns>Vector of segments with their belonging pixels, segment image</returns>
-    std::pair<std::vector<std::vector<Pixel>>, RawImage> segmentizeImageWithDBSCAN(const cv::Mat& image, const double epsilon = 5.0, const int minimumNumberOfNeighbourhoodPoints = 25);
+    std::pair<std::vector<std::vector<Pixel>>, QImage> segmentizeImageWithDBSCAN(cv::Mat& image, const double epsilon = 5.0, const int minimumNumberOfNeighbourhoodPoints = 25, const int seed = 0);
 
     /// <summary>
     /// Dividing an image into separate segments using the sweep-line approach.
@@ -39,5 +46,5 @@ namespace ImageSegmentation {
     /// <param name="image">Image to be segmentized</param>
     /// <param name="threshold">Maximum allowed difference of connected pixels that belong to the same segment</param>
     /// <returns>Vector of segments with their belonging pixels, segment image</returns>
-    std::pair<std::vector<std::vector<Pixel>>, RawImage> segmentizeImageWithSweepLine(const cv::Mat& image, const double threshold);
+    std::pair<std::vector<std::vector<Pixel>>, QImage> segmentizeImageWithSweepLine(cv::Mat& image, const double threshold, const int maxDeviation, const Distance& distance, const int seed);
 };
